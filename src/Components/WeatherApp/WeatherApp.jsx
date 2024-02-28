@@ -12,7 +12,7 @@ import humidity_icon from "../Assets/humidity.png"
 
 export default function WeatherApp() {
 
-    const api_key="censored"
+    const api_key=""
 
     const [wicon, setWicon] = useState(cloud_icon)
 
@@ -31,9 +31,34 @@ export default function WeatherApp() {
         const location = document.getElementsByClassName("weather-location")
 
         humidity[0].innerHTML = data.main.humidity+" %"
-        wind[0].innerHTML = data.wind.speed+" mph"
-        temperature[0].innerHTML = data.main.temp+"°f"
+        wind[0].innerHTML = Math.floor(data.wind.speed)+" mph"
+        temperature[0].innerHTML = Math.floor(data.main.temp)+"°f"
         location[0].innerHTML = data.name
+
+        if(data.weather[0].icon === "01d" || data.weather[0].icon === "01n"){
+            setWicon(clear_icon)
+        }
+        else if(data.weather[0].icon === "02d" || data.weather[0].icon === "02n"){
+            setWicon(cloud_icon)
+        }
+        else if(data.weather[0].icon === "03d" || data.weather[0].icon === "03n"){
+            setWicon(drizzle_icon)
+        }
+        else if(data.weather[0].icon === "04d" || data.weather[0].icon === "04n"){
+            setWicon(drizzle_icon)
+        }
+        else if(data.weather[0].icon === "09d" || data.weather[0].icon === "09n"){
+            setWicon(rain_icon)
+        }
+        else if(data.weather[0].icon === "10d" || data.weather[0].icon === "10n"){
+            setWicon(rain_icon)
+        }
+        else if(data.weather[0].icon === "13d" || data.weather[0].icon === "13n"){
+            setWicon(snow_icon)
+        }
+        else{
+            setWicon(clear_icon)
+        }
     }
 
     return (
@@ -45,7 +70,7 @@ export default function WeatherApp() {
             </div>
         </div>
         <div className="weather-image">
-            <img src={cloud_icon} alt="" />
+            <img src={wicon} alt="" />
         </div>
         <div className="weather-temp">
             25
